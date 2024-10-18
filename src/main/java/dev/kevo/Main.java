@@ -52,45 +52,53 @@ public class Main {
                 scanner.nextLine();
                 switch (userOption) {
                     case 1:
-                        for (int i = 0; i < 10; i++) {
+                        do {
+                            for (int i = 0; i < 10; i++) {
+                                System.out.println(spacer);
+                            }
+                            int roll = getRoll();
+                            System.out.println(center(name + ", you have selected option 1 - roll dice"));
                             System.out.println(spacer);
-                        }
-                        int roll = getRoll();
-                        System.out.println(center(name + ", you have selected option 1 - roll dice"));
-                        System.out.println(spacer);
-                        System.out.println(center("You have rolled " + roll));
-                        System.out.println(spacer);
-                        eP();
+                            System.out.println(center("You have rolled " + roll));
+                            System.out.println(spacer);
+                            System.out.println("Roll again y/n... ");
+                            exitOption();
+                        } while (!input.equals("n") && (!input.equals("N")));
                         break;
                     case 2:
                         int roll1 = getRoll();
                         int roll2 = getRoll();
-                        int rollTotal = roll1 + roll2;
-                        for (int i = 0; i < 10; i++) {
+                        do {
+                            int rollTotal = roll1 + roll2;
+                            for (int i = 0; i < 10; i++) {
+                                System.out.println(spacer);
+                            }
+                            System.out.println(center(name + ", you selected Option 2 - roll two dice"));
                             System.out.println(spacer);
-                        }
-                        System.out.println(center(name + ", you selected Option 2 - roll two dice"));
-                        System.out.println(spacer);
-                        System.out.println(leftJustify("your first dice roll is: " + roll1));
-                        System.out.println(spacer);
-                        System.out.println(leftJustify("your second dice roll is: " + roll2));
-                        System.out.println(spacer);
-                        System.out.println(leftJustify("your total is: " + rollTotal));
-                        System.out.println(spacer);
-                        eP();
+                            System.out.println(leftJustify("your first dice roll is: " + roll1));
+                            System.out.println(spacer);
+                            System.out.println(leftJustify("your second dice roll is: " + roll2));
+                            System.out.println(spacer);
+                            System.out.println(leftJustify("your total is: " + rollTotal));
+                            System.out.println(spacer);
+                            exitOption();
+                        } while (!input.equals("n") && (!input.equals("N")));
                         break;
                     case 3:
-                        System.out.print("How many dice would you like to roll? - ");
-                        int thisManyDice = scanner.nextInt();
-                        int[] multiRoll = rollTheDice(thisManyDice);
-                        int total = 0;
-                        for (int i = 0; i < thisManyDice; i++) {
-                            System.out.println("roll " + (i+1) + " is: " + multiRoll[i]);
-                            total += multiRoll[i];
-                        }
-                        System.out.println("the total is: " + total);
-                        int score = getTotal(multiRoll);
-                        System.out.println(score);
+                        do {
+                            System.out.print("How many dice would you like to roll? - ");
+                            int thisManyDice = scanner.nextInt();
+                            int[] multiRoll = rollTheDice(thisManyDice);
+                            int total = 0;
+                            for (int i = 0; i < thisManyDice; i++) {
+                                System.out.println("roll " + (i+1) + " is: " + multiRoll[i]);
+                                total += multiRoll[i];
+                            }
+                            System.out.println("the total is: " + total);
+                            int score = getTotal(multiRoll);
+                            System.out.println(score);
+                            exitOption();
+                        } while (!input.equals("n") && (!input.equals("N")));
                         break;
                     case 4:
                         playBlackJack();
@@ -109,11 +117,11 @@ public class Main {
             }
         }
     }
-    static String center(String text) {
+    public static String center(String text) {
         int padding = (65 - text.length()) / 2;
         return " ".repeat(padding) + text + " ".repeat(padding);
     }
-    static String leftJustify(String text) {
+    public static String leftJustify(String text) {
         int padding = 15;
         return " ".repeat(padding) + text;
     }
