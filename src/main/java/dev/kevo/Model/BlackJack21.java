@@ -17,8 +17,9 @@ public class BlackJack21 {
     public static int currentScore;
     public static int computerScore;
     public static int numOfDice;
-    public static int compPlayCount = 1;
+    public static int compPlayCount;
     public static String input;
+    public static boolean isBusted = false;
 
 
     // game logic
@@ -58,15 +59,28 @@ public class BlackJack21 {
                         numOfDice = 2;
                         computerPlay(numOfDice);
                         String winner = winnerCalc(currentScore, computerScore);
-                        if (winner == "TIE") {
-                            System.out.println("The game is tied! The computer scored: " + computerScore + " and your score is: " + currentScore);
+
+                        if (isBusted) {
+                            System.out.println("YAY!!! You WON!!! your score is: " + currentScore + "and the computer score has BUSTED!");
+                            System.out.println("Play again y/n... ");
                             exitOption();
+                            if (!input.equals("n") && (!input.equals("N"))) {
+                                playBlackJack();
+                            }
+                        } else if (winner == "TIE") {
+                            System.out.println("The game is tied! The computer scored: " + computerScore + " and your score is: " + currentScore);
+                            System.out.println("Play again y/n... ");
+                            exitOption();
+                            if (!input.equals("n") && (!input.equals("N"))) {
+                                playBlackJack();
+                            }
                         } else if (winner.equals(computer)) {
                             System.out.println("So SORRY you LOST! The computer scored: " + computerScore + " and your score is: " + currentScore);
+                            System.out.println("Play again y/n... ");
                             exitOption();
-                        } else {
-                            System.out.println("YAY!!! You WON!!! your score is: " + currentScore + "and the computer score is: " + computerScore);
-                            exitOption();
+                            if (!input.equals("n") && (!input.equals("N"))) {
+                                playBlackJack();
+                            }
                         }
                         return;
                     case 2:
@@ -83,7 +97,7 @@ public class BlackJack21 {
                             break;
                         }
                     case 3:
-                        if  (currentScore < 21) {
+                        if (currentScore < 21) {
                             numOfDice = 1;
                             gamePlay(numOfDice);
 
@@ -123,6 +137,7 @@ public class BlackJack21 {
 
         computer = "computer";
         computerScore = 0;
+        compPlayCount = 1;
         int[] compRoll = Dice.rollTheDice(numOfDice);
         computerTurn(compRoll);
 
@@ -143,6 +158,11 @@ public class BlackJack21 {
                 computerTurn(compRoll);
             }
             if (computerScore > 15) {
+                if (computerScore <= currentScore) {
+                    numOfDice = 1;
+                    compRoll = Dice.rollTheDice(numOfDice);
+                    computerTurn(compRoll);
+                }
                 return;
             }
         }
@@ -155,10 +175,18 @@ public class BlackJack21 {
         computerDiceArrayRoll(compRoll);
         computerScore = computerScore + getTotal(compRoll);
         compPlayCount++;
-        System.out.println(spacer);
-        System.out.println(leftJustify("The computers current score is: " + computerScore));
-        System.out.println(spacer);
-        System.out.println(border);
+        if (computerScore > 21) {
+            isBusted = true;
+            System.out.println(spacer);
+            System.out.println(leftJustify("BUST!"));
+            System.out.println(spacer);
+            System.out.println(border);
+        } else {
+            System.out.println(spacer);
+            System.out.println(leftJustify("The computers current score is: " + computerScore));
+            System.out.println(spacer);
+            System.out.println(border);
+        }
         waitForComputerRoll();
     }
 

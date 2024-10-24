@@ -81,6 +81,7 @@ public class Main {
                             System.out.println(spacer);
                             System.out.println(leftJustify("your total is: " + rollTotal));
                             System.out.println(spacer);
+                            System.out.println("Roll again y/n... ");
                             exitOption();
                         } while (!input.equals("n") && (!input.equals("N")));
                         break;
@@ -88,6 +89,7 @@ public class Main {
                         do {
                             System.out.print("How many dice would you like to roll? - ");
                             int thisManyDice = scanner.nextInt();
+                            scanner.nextLine();
                             int[] multiRoll = rollTheDice(thisManyDice);
                             int total = 0;
                             for (int i = 0; i < thisManyDice; i++) {
@@ -95,8 +97,9 @@ public class Main {
                                 total += multiRoll[i];
                             }
                             System.out.println("the total is: " + total);
-                            int score = getTotal(multiRoll);
-                            System.out.println(score);
+
+
+                            System.out.println("Roll again y/n... ");
                             exitOption();
                         } while (!input.equals("n") && (!input.equals("N")));
                         break;
